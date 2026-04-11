@@ -77,6 +77,10 @@ func Command(stdout, stderr io.Writer, client *http.Client) *cli.Command {
 				Name:  "maven-registry",
 				Usage: "URL of the default registry to fetch Maven metadata",
 			},
+			&cli.BoolFlag{
+				Name:  helper.AllowUnsafeRustCallAnalysisFlag,
+				Usage: "acknowledge that Rust call analysis may execute untrusted code through cargo build scripts (build.rs)",
+			},
 		}, helper.BuildCommonScanFlags([]string{"lockfile", "sbom", "directory"})...),
 		ArgsUsage: "[directory1 directory2...]",
 		Action: func(ctx context.Context, cmd *cli.Command) error {
@@ -112,6 +116,14 @@ func action(_ context.Context, cmd *cli.Command, stdout, stderr io.Writer, clien
 
 	scanLicensesAllowlist, err := helper.GetScanLicensesAllowlist(cmd)
 	if err != nil {
+		return err
+	}
+
+	if err := helper.ValidateRustCallAnalysisAcknowledgement(
+		cmd.StringSlice("call-analysis"),
+		cmd.StringSlice("no-call-analysis"),
+		cmd.Bool(helper.AllowUnsafeRustCallAnalysisFlag),
+	); err != nil {
 		return err
 	}
 

@@ -228,6 +228,8 @@ func extractRlibArchive(rlibPath string) (bytes.Buffer, error) {
 func rustBuildSource(source models.SourceInfo) ([]string, error) {
 	projectBaseDir := filepath.Dir(source.Path)
 
+	cmdlogger.Warnf("Warning: Rust call analysis compiles the scanned project with cargo and may execute arbitrary code via build scripts (build.rs). Only use this on trusted projects or in a sandboxed environment.")
+
 	// TODO: This will be moved to enrichers which does have context.
 	cmd := exec.CommandContext(context.TODO(), "cargo", "build", "--workspace", "--all-targets", "--release")
 	cmd.Env = append(cmd.Environ(), RustFlagsEnv)

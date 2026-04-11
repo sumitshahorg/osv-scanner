@@ -166,6 +166,7 @@ Call analysis in Rust is still considered experimental.
 
 > Running call analysis for Rust will execute build scripts (`build.rs`) in your dependencies as part of the compilation.
 > This may execute arbitrary code.
+> In source scans, you must explicitly acknowledge this risk with `--allow-unsafe-rust-call-analysis` when using `--call-analysis=rust`.
 
 OSV-Scanner compiles Rust source code and analyzes the output binary's DWARF debug information to identify called vulnerable functions.
 

@@ -1195,6 +1195,7 @@ OPTIONS:
    --experimental-exclude string [ --experimental-exclude string ]                  exclude directory paths during scanning; use g:pattern for glob, r:pattern for regex, or just dirname for exact match (can be repeated)
    --data-source string                                                             source to fetch package information from; value can be: deps.dev, native (default: "deps.dev")
    --maven-registry string                                                          URL of the default registry to fetch Maven metadata
+   --allow-unsafe-rust-call-analysis                                                acknowledge that Rust call analysis may execute untrusted code through cargo build scripts (build.rs)
    --config string                                                                  set/override config file
    --format string, -f string                                                       sets the output format; value can be: table, html, vertical, json, markdown, sarif, gh-annotations, cyclonedx-1-4, cyclonedx-1-5, spdx-2-3 (default: "table")
    --serve                                                                          output as HTML result and serve it locally
@@ -1205,7 +1206,7 @@ OPTIONS:
    --offline                                                                        run in offline mode, disabling any features requiring network access
    --offline-vulnerabilities                                                        checks for vulnerabilities using local databases that are already cached
    --download-offline-databases                                                     downloads vulnerability databases for offline comparison
-   --call-analysis string [ --call-analysis string ]                                Enable call analysis for specific languages (e.g. --call-analysis=go). Supported: go, rust (*). (*) Will run build scripts.
+   --call-analysis string [ --call-analysis string ]                                Enable call analysis for specific languages (e.g. --call-analysis=go). Supported: go, rust (*). (*) In source scans, rust requires --allow-unsafe-rust-call-analysis and will run build scripts.
    --no-call-analysis string [ --no-call-analysis string ]                          disables call graph analysis
    --no-resolve                                                                     disable transitive dependency resolution of manifest files
    --allow-no-lockfiles                                                             has the scanner consider no lockfiles being found as ok
